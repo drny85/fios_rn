@@ -1,8 +1,11 @@
-import React , {useState, useEffect} from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Platform } from 'react-native'
 import * as refActions from '../store/actions/referrals';
 import { Button } from 'react-native-elements';
+import { Item, HeaderButtons } from 'react-navigation-header-buttons';
+import CustomHeaderButton from '../components/HeaderButton';
+import Referral from '../components/Referral';
 
 const WelcomeScreen = () => {
     const [referrals, setReferrals] = useState([]);
@@ -14,18 +17,22 @@ const WelcomeScreen = () => {
         console.log('Getting');
         dispatch(refActions.getReferrals());
     }
-   
+
     return (
         <View style={styles.screen}>
-            <Text>Welcome Screen </Text>
+            <Referral />
             <Button title="Get" onPress={getREF} />
         </View>
     )
 }
 
-WelcomeScreen.navigationOptions = () => {
+WelcomeScreen.navigationOptions = ({ navigation }) => {
     return {
-        headerTitle: "Welcome"
+        headerTitle: "Welcome",
+        headerLeft: <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+            <Item onPress={() => navigation.toggleDrawer()} title="Menu" iconName={Platform.OS === 'android' ? 'md-menu' : 'ios-menu'} />
+        </HeaderButtons>
+
     }
 }
 

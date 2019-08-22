@@ -1,10 +1,32 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, Button } from 'react-native'
+
 
 const Referral = props => {
-    const { name, lastName, email, phone, moveIn, address } = props
+    const { name, lastName, email, phone, moveIn, address, status, onSelected } = props
+
+    const setColor = (status) => {
+        switch (status) {
+            case 'closed':
+                
+                return '#6ca33e'
+                
+                break;
+            case 'pending':
+                return '#adac58'
+                
+                break;
+            case 'not sold':
+                return '#a14335'
+                break;
+        
+            default:
+                break;
+        }
+    }
     return (
-        <View style={styles.referral}>
+        <TouchableOpacity style={{...styles.referral, shadowColor: setColor(status)}} activeOpacity={0.5} onPress={onSelected}>
+        <View>
             <View style={styles.nameView}>
                 <Text style={styles.name}>{name} {lastName}</Text>
             </View>
@@ -15,8 +37,13 @@ const Referral = props => {
             <View style={styles.info}>
                 <Text><Text style={styles.bold}>Phone:</Text>{phone}</Text>
                 <Text><Text style={styles.bold}>Email:</Text>{email}</Text>
+                <Text><Text style={styles.bold}>Status:</Text>{status}</Text>
+            </View>
+            <View style={styles.btnView}>
+                <Button title="View Details" onPress={onSelected} />
             </View>
         </View>
+        </TouchableOpacity>
     )
 }
 
@@ -24,16 +51,19 @@ const styles = StyleSheet.create({
     nameView: {
         flexDirection: 'row',
         alignContent: 'center',
-        alignItems: 'center',
-        height: '20%'
+        alignItems: 'center'
+       
     },
     bold: {
         fontWeight: '600',
-        paddingRight: 4
+        paddingRight: 4,
+        paddingVertical: 10,
+        marginRight: 10
     },
     name: {
         fontSize: 24,
-        fontWeight: '600'
+        fontWeight: '600',
+        textTransform: 'capitalize'
     },
     moving: { fontSize: 16 },
 
@@ -42,31 +72,49 @@ const styles = StyleSheet.create({
         marginBottom: 4
     },
     detailView: {
-        height: '35%',
+        
         paddingVertical: 8
     },
 
+    sold: {
+        backgroundColor: '#6ca33e'
+    },
+    notSold: {
+        backgroundColor: '#a14335'
+    },
+    
     info: {
-        height: '30%',
+       
         justifyContent: 'space-between'
+       
     },
     referral: {
         width: '90%',
         maxWidth: 500,
-        padding: 20,
+        padding: 10,
         margin: 10,
         shadowColor: 'black',
         elevation: 5,
         backgroundColor: 'white',
         shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.26,
-        shadowRadius: 10,
+        shadowOpacity: 0.56,
+        shadowRadius: 18,
         borderRadius: 10,
-        height: 200,
-        maxHeight: 300,
+        height: 300,
+        maxHeight: 500,
         justifyContent: 'center',
         alignItems: 'flex-start',
-        textAlign: 'left'
+        textAlign: 'left',
+        fontSize: 20
+        
+    },
+
+    btnView: {
+        height: '20%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'row'
+       
     }
 })
 

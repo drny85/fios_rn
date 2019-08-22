@@ -6,20 +6,23 @@ import Referral from '../components/Referral';
 import { useSelector, useDispatch } from 'react-redux'
 import * as refActions from '../store/actions/referrals';
 
-const ReferralsScreen = () => {
+const ReferralsScreen = ({navigation}) => {
 
     //const referrals = useSelector(state => state.referrals.referrals);
     const referrals = useSelector(state => state.referrals.referrals);
-    console.log(referrals);
+    
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(refActions.getReferrals())
     }, []);
 
+    const onSelected = id => {
+        navigation.navigate('Details', {'referralId': id});
+    }
+
     return (
         <View>
-            <Text>Referral screen</Text>
             <View>
                 <FlatList
                     data={referrals}
@@ -29,6 +32,8 @@ const ReferralsScreen = () => {
                         phone={item.phone}
                         moveIn={item.moveIn}
                         address={item.address}
+                        status={item.status}
+                        onSelected={onSelected.bind(this, item._id)}
                     />}
                 />
             </View>

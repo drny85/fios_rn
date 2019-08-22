@@ -10,6 +10,7 @@ import WelcomeScreen from './screens/WelcomeScreen';
 import StartupScreen from './screens/StartupScreen';
 import referralReducer from './store/reducers/referrals';
 import ReferralsScreen from './screens/ReferralsScreen';
+import ReferralDetails from './components/ReferralDetails';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -28,7 +29,8 @@ const mainNavigation = createStackNavigator({
 })
 
 const referralsNav = createStackNavigator({
-  Referrals: ReferralsScreen
+  Referrals: ReferralsScreen,
+  Details: ReferralDetails
 })
 
 const mainNav = createSwitchNavigator({

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { View, Text, StyleSheet, Platform } from 'react-native'
 import * as refActions from '../store/actions/referrals';
@@ -10,13 +10,15 @@ import Referral from '../components/Referral';
 const WelcomeScreen = () => {
     const [referrals, setReferrals] = useState([]);
     const referralss = useSelector(state => state.referrals);
-    console.log(referralss);
     const dispatch = useDispatch()
 
     const getREF = () => {
-        console.log('Getting');
         dispatch(refActions.getReferrals());
     }
+
+    useEffect(() => {
+        getREF();
+    }, [])
 
     return (
         <View style={styles.screen}>

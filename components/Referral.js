@@ -2,18 +2,19 @@ import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 
 const Referral = props => {
+    const { name, lastName, email, phone, moveIn, address } = props
     return (
         <View style={styles.referral}>
             <View style={styles.nameView}>
-                <Text style={styles.name}>Robert Melendez</Text>
+                <Text style={styles.name}>{name} {lastName}</Text>
             </View>
             <View style={styles.detailView}>
-                <Text style={styles.address}><Text style={{ fontWeight: '600' }}>Address:</Text> 63 well Ave</Text>
-                <Text style={styles.moving}><Text style={{ fontWeight: '600' }}>Moving:</Text> 06/09/2019</Text>
+                <Text style={styles.address}><Text style={styles.bold}>Address:</Text>{address}</Text>
+                <Text style={styles.moving}><Text style={styles.bold}>Moving:</Text>{moveIn}</Text>
             </View>
             <View style={styles.info}>
-                <Text><Text>Phone:</Text>347-234-5555</Text>
-                <Text><Text>Email:</Text>drny85@me.com</Text>
+                <Text><Text style={styles.bold}>Phone:</Text>{phone}</Text>
+                <Text><Text style={styles.bold}>Email:</Text>{email}</Text>
             </View>
         </View>
     )
@@ -26,6 +27,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         height: '20%'
     },
+    bold: {
+        fontWeight: '600',
+        paddingRight: 4
+    },
     name: {
         fontSize: 24,
         fontWeight: '600'
@@ -33,10 +38,12 @@ const styles = StyleSheet.create({
     moving: { fontSize: 16 },
 
     address: {
-        fontSize: 16
+        fontSize: 16,
+        marginBottom: 4
     },
     detailView: {
-        height: '30%'
+        height: '35%',
+        paddingVertical: 8
     },
 
     info: {

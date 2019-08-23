@@ -17,7 +17,6 @@ const AddReferral = () => {
     }
     return (
         <View style={styles.screen}>
-            <Text>Add Referral</Text>
             <View>
                 <Input label="Name" placeholder="name" />
                 <Input label="Last Name" placeholder="last name" />
@@ -44,5 +43,11 @@ const styles = StyleSheet.create({
         flex: 1
     }
 })
+
+AddReferral.navigationOptions = () => {
+    return {
+        headerTitle: 'Add Referral'
+    }
+}
 
 export default AddReferral

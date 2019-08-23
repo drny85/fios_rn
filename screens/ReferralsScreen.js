@@ -10,7 +10,7 @@ import { Button } from 'react-native-elements';
 const ReferralsScreen = ({ navigation }) => {
     //
     //const referrals = useSelector(state => state.referrals.referrals);
-    const referrals = useSelector(state => state.referrals.referrals);
+    const referrals = useSelector(state => state.referrals.referrals.filter(ref => ref.status === 'new'));
     const [showModal, setShowModal] = useState(false);
 
     const dispatch = useDispatch();
@@ -30,7 +30,7 @@ const ReferralsScreen = ({ navigation }) => {
 
     return (
         <View>
-            <View style={{ padding: 10 }}>
+            <View>
                 <Button buttonStyle={{ paddingHorizontal: 20, alignSelf: 'center' }} title="Add Referral" onPress={() => navigation.navigate('Add')} />
             </View>
             <View>
@@ -74,4 +74,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default ReferralsScreen
+export default ReferralsScreen;

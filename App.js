@@ -1,6 +1,7 @@
 import React from 'react'
 import { createAppContainer, createStackNavigator, createSwitchNavigator, createDrawerNavigator } from 'react-navigation'
 import LoginScreen from './screens/LoginScreen';
+import Colors from './constants/Colors';
 
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import authReducer from './store/reducers/auth';
@@ -33,10 +34,13 @@ const referralsNav = createStackNavigator({
   Referrals: ReferralsScreen,
   Details: ReferralDetails,
   Add: AddReferral
-},
-
-  {
-    initialRouteName: 'Add'
+}, {
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: Colors.primary
+      },
+      headerTintColor: Colors.secondady
+    }
   }
 )
 

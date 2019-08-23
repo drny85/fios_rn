@@ -1,5 +1,7 @@
 import React from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, Button } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import Colors from '../constants/Colors';
+import { Button } from 'react-native-elements'
 
 
 const Referral = props => {
@@ -8,41 +10,41 @@ const Referral = props => {
     const setColor = (status) => {
         switch (status) {
             case 'closed':
-                
+
                 return '#6ca33e'
-                
+
                 break;
             case 'pending':
                 return '#adac58'
-                
+
                 break;
             case 'not sold':
                 return '#a14335'
                 break;
-        
+
             default:
                 break;
         }
     }
     return (
-        <TouchableOpacity style={{...styles.referral, shadowColor: setColor(status)}} activeOpacity={0.5} onPress={onSelected}>
-        <View>
-            <View style={styles.nameView}>
-                <Text style={styles.name}>{name} {lastName}</Text>
+        <TouchableOpacity style={{ ...styles.referral, shadowColor: setColor(status) }} activeOpacity={0.5} onPress={onSelected}>
+            <View>
+                <View style={styles.nameView}>
+                    <Text style={styles.name}>{name} {lastName}</Text>
+                </View>
+                <View style={styles.detailView}>
+                    <Text style={styles.address}><Text style={styles.bold}>Address: </Text>{address}</Text>
+                    <Text style={styles.moving}><Text style={styles.bold}>Moving: </Text>{moveIn}</Text>
+                </View>
+                <View style={styles.info}>
+                    <Text><Text style={styles.bold}>Phone: </Text>{phone}</Text>
+                    <Text><Text style={styles.bold}>Email: </Text>{email}</Text>
+                    <Text><Text style={styles.bold}>Status: </Text>{status}</Text>
+                </View>
+                <View style={styles.btnView}>
+                    <Button title="View Details" buttonStyle={styles.btn} color={Colors.secondady} onPress={onSelected} />
+                </View>
             </View>
-            <View style={styles.detailView}>
-                <Text style={styles.address}><Text style={styles.bold}>Address:</Text>{address}</Text>
-                <Text style={styles.moving}><Text style={styles.bold}>Moving:</Text>{moveIn}</Text>
-            </View>
-            <View style={styles.info}>
-                <Text><Text style={styles.bold}>Phone:</Text>{phone}</Text>
-                <Text><Text style={styles.bold}>Email:</Text>{email}</Text>
-                <Text><Text style={styles.bold}>Status:</Text>{status}</Text>
-            </View>
-            <View style={styles.btnView}>
-                <Button title="View Details" onPress={onSelected} />
-            </View>
-        </View>
         </TouchableOpacity>
     )
 }
@@ -52,27 +54,29 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignContent: 'center',
         alignItems: 'center'
-       
+
     },
     bold: {
         fontWeight: '600',
         paddingRight: 4,
         paddingVertical: 10,
-        marginRight: 10
+        marginRight: 10,
+        fontSize: 18
     },
     name: {
         fontSize: 24,
         fontWeight: '600',
         textTransform: 'capitalize'
     },
-    moving: { fontSize: 16 },
+    moving: { fontSize: 18 },
 
     address: {
-        fontSize: 16,
-        marginBottom: 4
+        fontSize: 18,
+        marginBottom: 4,
+        textTransform: 'capitalize'
     },
     detailView: {
-        
+
         paddingVertical: 8
     },
 
@@ -82,11 +86,18 @@ const styles = StyleSheet.create({
     notSold: {
         backgroundColor: '#a14335'
     },
-    
+
     info: {
-       
+
         justifyContent: 'space-between'
-       
+
+    },
+    btn: {
+        backgroundColor: Colors.primary,
+        paddingHorizontal: 15,
+        marginTop: 30,
+        alignSelf: 'center'
+
     },
     referral: {
         width: '90%',
@@ -106,15 +117,15 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
         textAlign: 'left',
         fontSize: 20
-        
+
     },
 
     btnView: {
-        height: '20%',
+
         alignItems: 'center',
         justifyContent: 'center',
+        width: '100%',
         flexDirection: 'row'
-       
     }
 })
 

@@ -11,12 +11,14 @@ import WelcomeScreen from './screens/WelcomeScreen';
 import StartupScreen from './screens/StartupScreen';
 import referralReducer from './store/reducers/referrals';
 import ReferralsScreen from './screens/ReferralsScreen';
+import refereeReducer from './store/reducers/referee';
 import ReferralDetails from './components/ReferralDetails';
 import AddReferral from './components/AddReferral';
 
 const rootReducer = combineReducers({
   auth: authReducer,
-  referrals: referralReducer
+  referrals: referralReducer,
+  referee: refereeReducer
 })
 
 

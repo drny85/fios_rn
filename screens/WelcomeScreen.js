@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { View, Text, StyleSheet, Platform } from 'react-native'
 import * as refActions from '../store/actions/referrals';
+import * as actionsReferee from '../store/actions/referee';
 import { Button } from 'react-native-elements';
 import { Item, HeaderButtons } from 'react-navigation-header-buttons';
 import CustomHeaderButton from '../components/HeaderButton';
@@ -14,6 +15,8 @@ const WelcomeScreen = () => {
 
     const getREF = () => {
         dispatch(refActions.getReferrals());
+        dispatch(actionsReferee.getReferees());
+
     }
 
     useEffect(() => {

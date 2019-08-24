@@ -47,6 +47,7 @@ WelcomeScreen.navigationOptions = ({ navigation }) => {
 }
 
 
+
 const styles = StyleSheet.create({
     screen: {
         flex: 1,

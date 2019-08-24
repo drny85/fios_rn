@@ -23,7 +23,7 @@ const AddReferral = () => {
     }));
 
     const [name, setName] = useState('');
-    const [lastName, setLastName] = useState('');
+    const [last_name, setLastName] = useState('');
     const [address, setAddress] = useState('');
     const [apt, setApt] = useState('')
     const [moveIn, setMoveIn] = useState('');
@@ -41,11 +41,13 @@ const AddReferral = () => {
 
     const formHandler = () => {
 
+
+
         const referral = {
             name,
             lastName, address, email, city, moveIn, phone, status, apt, manager, referralBy, zipcode
         }
-        dispatch(actionsReferral.addReferral(referral));
+        // dispatch(actionsReferral.addReferral(referral));
     }
 
     const handleDatePicked = date => {
@@ -67,7 +69,7 @@ const AddReferral = () => {
                             <Input label="Name" onChangeText={setName} value={name} placeholder="name" />
                         </View>
                         <View style={styles.row}>
-                            <Input label="Last Name" onChangeText={setLastName} value={lastName} placeholder="last name" />
+                            <Input label="Last Name" onChangeText={setLastName} value={last_name} placeholder="last name" />
                         </View>
                     </View>
                     <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>

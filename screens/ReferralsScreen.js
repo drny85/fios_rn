@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react'
-import { View, Text, FlatList, Platform, StyleSheet } from 'react-native';
+import { View, Text, FlatList, Platform, StyleSheet, Modal } from 'react-native';
 import { Item, HeaderButtons } from 'react-navigation-header-buttons';
 import CustomHeaderButton from '../components/HeaderButton';
 import Referral from '../components/Referral';
@@ -31,7 +31,7 @@ const ReferralsScreen = ({ navigation }) => {
     return (
         <View>
             <View>
-                <Button buttonStyle={{ paddingHorizontal: 20, alignSelf: 'center' }} title="Add Referral" onPress={() => navigation.navigate('Add')} />
+                <Button buttonStyle={{ paddingHorizontal: 20, alignSelf: 'center', marginTop: 20, marginBottom: 10 }} title="Add Referral" onPress={() => navigation.navigate('Add')} />
             </View>
             <View>
                 <FlatList
@@ -43,10 +43,12 @@ const ReferralsScreen = ({ navigation }) => {
                         moveIn={item.moveIn}
                         address={item.address}
                         status={item.status}
+                        collateral={item.collateral_sent}
                         onSelected={onSelected.bind(this, item._id)}
                     />}
                 />
             </View>
+
         </View>
     )
 }

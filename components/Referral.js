@@ -1,11 +1,12 @@
 import React from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import Colors from '../constants/Colors';
-import { Button } from 'react-native-elements'
+import { Button } from 'react-native-elements';
+import moment from 'moment'
 
 
 const Referral = props => {
-    const { name, lastName, email, phone, moveIn, address, status, onSelected } = props
+    const { name, lastName, email, phone, moveIn, address, status, collateral, onSelected } = props
 
     const setColor = (status) => {
         switch (status) {
@@ -34,11 +35,12 @@ const Referral = props => {
                 </View>
                 <View style={styles.detailView}>
                     <Text style={styles.address}><Text style={styles.bold}>Address: </Text>{address}</Text>
-                    <Text style={styles.moving}><Text style={styles.bold}>Moving: </Text>{moveIn}</Text>
+                    <Text style={styles.moving}><Text style={styles.bold}>Moving: </Text>{moment(moveIn).format('MMMM Do YYYY')}</Text>
                 </View>
                 <View style={styles.info}>
                     <Text><Text style={styles.bold}>Phone: </Text>{phone}</Text>
                     <Text><Text style={styles.bold}>Email: </Text>{email}</Text>
+                    <Text style={styles.bold}><Text style={{ fontWeight: '600' }}>Collateral: </Text><Text style={styles.capitalize}>{collateral ? 'Yes' : 'No'}</Text></Text>
                     <Text><Text style={styles.bold}>Status: </Text>{status}</Text>
                 </View>
                 <View style={styles.btnView}>
@@ -126,6 +128,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         width: '100%',
         flexDirection: 'row'
+    },
+    capitalize: {
+        textTransform: 'capitalize'
     }
 })
 

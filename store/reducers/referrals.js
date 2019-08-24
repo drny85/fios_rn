@@ -1,4 +1,4 @@
-import { GET_REFERRALS } from "../actions/referrals";
+import { GET_REFERRALS, ERROR_REFERRAL } from "../actions/referrals";
 
 const initialState = {
     referrals: [],
@@ -7,7 +7,7 @@ const initialState = {
     sortedReferrals: []
 }
 
- const referralReducer = (state= initialState, action) => {
+const referralReducer = (state = initialState, action) => {
 
     switch (action.type) {
         case GET_REFERRALS:
@@ -15,13 +15,18 @@ const initialState = {
                 ...state,
                 referrals: [...action.payload],
                 error: null
+            };
+        case ERROR_REFERRAL:
+            return {
+                ...state,
+                error: action.payload
             }
-            
+
         default:
             return state;
     }
-   
- }
+
+}
 
 
- export default referralReducer;
+export default referralReducer;

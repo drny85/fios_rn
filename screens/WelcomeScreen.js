@@ -1,21 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { View, Text, StyleSheet, Platform } from 'react-native'
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { View, Text, StyleSheet, Platform, ImageBackground, Dimensions } from 'react-native'
 import * as refActions from '../store/actions/referrals';
 import * as actionsReferee from '../store/actions/referee';
+import * as actionsManager from '../store/actions/managers';
 import { Button } from 'react-native-elements';
 import { Item, HeaderButtons } from 'react-navigation-header-buttons';
 import CustomHeaderButton from '../components/HeaderButton';
-import Referral from '../components/Referral';
+
 
 const WelcomeScreen = () => {
-    const [referrals, setReferrals] = useState([]);
-    const referralss = useSelector(state => state.referrals);
+
     const dispatch = useDispatch()
 
     const getREF = () => {
         dispatch(refActions.getReferrals());
         dispatch(actionsReferee.getReferees());
+        dispatch(actionsManager.getManagers());
 
     }
 
@@ -25,8 +26,12 @@ const WelcomeScreen = () => {
 
     return (
         <View style={styles.screen}>
-            <Referral />
-            <Button title="Get" onPress={getREF} />
+            <ImageBackground resizeMethod='auto' style={styles.img} source={{ uri: 'https://images.unsplash.com/photo-1519501025264-65ba15a82390?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80' }}>
+                <View style={styles.textView}>
+                    <Text style={styles.text}>Welcome</Text>
+                </View>
+
+            </ImageBackground>
         </View>
     )
 }
@@ -47,7 +52,29 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    img: {
+        resizeMode: "contain",
+        width: Dimensions.get('window').width,
+        height: Dimensions.get('window').height
+    },
+    text: {
+        backgroundColor: 'transparent',
+        textAlign: 'center',
+        fontSize: 30,
+        padding: 40,
+        color: 'white',
+        fontWeight: '800',
+        letterSpacing: 2,
+        fontStyle: 'italic'
+
+    },
+    textView: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
     }
+
 })
 
 export default WelcomeScreen

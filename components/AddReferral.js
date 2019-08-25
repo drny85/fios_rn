@@ -8,7 +8,7 @@ import moment from 'moment'
 import Colors from '../constants/Colors';
 import * as actionsReferral from '../store/actions/referrals';
 
-const AddReferral = () => {
+const AddReferral = ({navigation}) => {
     // get all referees
     const referees = useSelector(state => state.referee.referees.map(ref => {
         return {
@@ -25,15 +25,16 @@ const AddReferral = () => {
     const [name, setName] = useState('');
     const [last_name, setLastName] = useState('');
     const [address, setAddress] = useState('');
-    const [apt, setApt] = useState('')
+    const [apt, setApt] = useState('');
     const [moveIn, setMoveIn] = useState('');
     const [zipcode, setZipCode] = useState('');
-    const [city, setCity] = useState('')
-    const [phone, setPhone] = useState('')
-    const [email, setEmail] = useState('')
+    const [city, setCity] = useState('');
+    const [phone, setPhone] = useState('');
+    const [email, setEmail] = useState('');
     const [manager, setManager] = useState('');
-    const [referralBy, setReferralBy] = useState('')
+    const [referralBy, setReferralBy] = useState('');
     const [status, setStatus] = useState('new');
+    const [comment, setComment] = useState('');
 
     const dispatch = useDispatch();
     const [showDate, setShowDate] = useState(false);
@@ -41,24 +42,26 @@ const AddReferral = () => {
 
     const formHandler = () => {
 
-
-
         const referral = {
             name,
-            lastName, address, email, city, moveIn, phone, status, apt, manager, referralBy, zipcode
+            last_name, address, email, city, moveIn, phone, status, apt, manager, referralBy, zipcode, comment
         }
-        // dispatch(actionsReferral.addReferral(referral));
+       
+        dispatch(actionsReferral.addReferral(referral));
+        navigation.navigate('Referrals')
+        
     }
 
     const handleDatePicked = date => {
         setShowDate(false);
-        setMoveIn(moment(date).format('MMMM Do YYYY'));
+        setMoveIn(new Date(date).toLocaleDateString());
 
     }
 
     const hideDateTimePicker = () => {
         setShowDate(prevState => prevState = !prevState);
     }
+    
     return (
         <KeyboardAvoidingView style={{ flex: 1 }} behavior='padding' keyboardVerticalOffset={100}>
             <View style={styles.screen}>
@@ -123,6 +126,7 @@ const AddReferral = () => {
                         style={pickerSelectStyles}
                         placeholder={{ label: 'status', value: null, color: 'black' }}
                     />
+                    <Input value={comment} onChangeText={setComment} style={{padding: 5}} placeholder="Ex.I spoke to customer on this day.., etc...." label="Comments or Notes" multiline={true} numberOfLines={4} />
 
                     <View style={{ marginTop: 15, padding: 10 }}>
                         <Button buttonStyle={{ backgroundColor: Colors.primary }} onPress={formHandler} title="Add Referral" />

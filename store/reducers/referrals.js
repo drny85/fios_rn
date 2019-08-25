@@ -1,4 +1,4 @@
-import { GET_REFERRALS, ERROR_REFERRAL } from "../actions/referrals";
+import { GET_REFERRALS, ERROR_REFERRAL, ADD_REFERRAL } from "../actions/referrals";
 
 const initialState = {
     referrals: [],
@@ -20,7 +20,12 @@ const referralReducer = (state = initialState, action) => {
             return {
                 ...state,
                 error: action.payload
-            }
+            };
+        case ADD_REFERRAL:
+            return{
+                ...state,
+                referrals: [...state.referrals.concat(action.payload)]
+            };
 
         default:
             return state;

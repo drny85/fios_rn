@@ -2,7 +2,7 @@ import React from 'react'
 import { createAppContainer, createStackNavigator, createSwitchNavigator, createDrawerNavigator, SafeAreaView, DrawerItems } from 'react-navigation'
 import LoginScreen from './screens/LoginScreen';
 import Colors from './constants/Colors';
-import { View, Text, TouchableOpacity} from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
 
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import authReducer from './store/reducers/auth';
@@ -60,29 +60,29 @@ const drawer = createDrawerNavigator({
   Home: mainNav,
   Referrals: referralsNav
 
-}, 
-{
-  contentOptions: {
-    activeBackgroundColor: '#e1e6e2'
-  },
-  contentComponent: props => {
-    const dispatch = useDispatch();
-    return (
-      <View style={{paddingTop: 20}}>
-      <SafeAreaView forceInset={{top: 'always', horizontal: 'never'}}>
-        <DrawerItems {...props} />
-        <TouchableOpacity onPress={() => 
-          {dispatch(authActions.logout())
-            props.navigation.navigate('Auth');
-          }}>
-          <Text style={{fontWeight: '600', fontSize: 18, paddingLeft: 15, color: 'red', paddingVertical:5, marginTop: 20}}>Log out</Text>
-        </TouchableOpacity>
-        
-      </SafeAreaView>
-    </View>
-    )
+},
+  {
+    contentOptions: {
+      activeBackgroundColor: '#e1e6e2'
+    },
+    contentComponent: props => {
+      const dispatch = useDispatch();
+      return (
+        <View style={{ paddingTop: 20 }}>
+          <SafeAreaView forceInset={{ top: 'always', horizontal: 'never' }}>
+            <DrawerItems {...props} />
+            <TouchableOpacity onPress={() => {
+              dispatch(authActions.logout())
+              props.navigation.navigate('Auth');
+            }}>
+              <Text style={{ fontWeight: '600', fontSize: 18, paddingLeft: 15, color: 'red', paddingVertical: 5, marginTop: 20 }}>Log out</Text>
+            </TouchableOpacity>
+
+          </SafeAreaView>
+        </View>
+      )
+    }
   }
-}
 
 )
 

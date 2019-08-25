@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react'
-import { View, Text, FlatList, Platform, StyleSheet, Modal } from 'react-native';
+import { View, Text, FlatList, Platform, StyleSheet } from 'react-native';
 import { Item, HeaderButtons } from 'react-navigation-header-buttons';
 import CustomHeaderButton from '../components/HeaderButton';
 import Referral from '../components/Referral';
@@ -15,12 +15,12 @@ const ReferralsScreen = ({ navigation }) => {
 
     const dispatch = useDispatch();
 
-    const filterHandler = useCallback(() => {
-        console.log('Filter');
-    }, [])
+    const callback = useCallback(() => {
+        dispatch(refActions.getReferrals());
+    }, [dispatch])
 
     useEffect(() => {
-        dispatch(refActions.getReferrals());
+        callback();
         navigation.setParams({ filterRef: () => setShowModal(prevState => prevState = !prevState) })
     }, []);
 

@@ -9,7 +9,7 @@ import { Item, HeaderButtons } from 'react-navigation-header-buttons';
 import CustomHeaderButton from '../components/HeaderButton';
 
 
-const WelcomeScreen = () => {
+const WelcomeScreen = ({ navigation }) => {
 
     const dispatch = useDispatch()
 
@@ -29,6 +29,7 @@ const WelcomeScreen = () => {
             <ImageBackground resizeMethod='auto' style={styles.img} source={{ uri: 'https://images.unsplash.com/photo-1519501025264-65ba15a82390?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80' }}>
                 <View style={styles.textView}>
                     <Text style={styles.text}>Welcome</Text>
+                    <Button title="Get Started" buttonStyle={{ backgroundColor: "transparent", borderColor: 'white', borderWidth: 0.5, borderRadius: 10, paddingHorizontal: 20 }} onPress={() => navigation.navigate('Referrals')} />
                 </View>
 
             </ImageBackground>

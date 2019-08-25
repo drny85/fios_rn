@@ -3,13 +3,13 @@ import { AsyncStorage } from 'react-native'
 
 
 const instance = axios.create({
-    baseURL: 'https://cd5916c7.ngrok.io'
+    baseURL: 'http://localhost:3000'
 })
 
 instance.interceptors.request.use(
     async (config) => {
         const data = await AsyncStorage.getItem('fiosData');
-       
+
         if (data) {
             const { token, user } = JSON.parse(data);
             config.headers['x-auth-token'] = token || '';

@@ -90,9 +90,7 @@ const styles = StyleSheet.create({
     },
 
     info: {
-
         justifyContent: 'space-between'
-
     },
     btn: {
         backgroundColor: Colors.primary,

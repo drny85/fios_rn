@@ -17,12 +17,15 @@ import managersReducer from './store/reducers/managers';
 import ReferralDetails from './components/ReferralDetails';
 import AddReferral from './components/AddReferral';
 import * as authActions from './store/actions/auth';
+import NotesScreen from './screens/NotesScreen';
+import notesReducer from './store/reducers/notes';
 
 const rootReducer = combineReducers({
   auth: authReducer,
   referrals: referralReducer,
   referee: refereeReducer,
-  managers: managersReducer
+  managers: managersReducer,
+  notes: notesReducer
 })
 
 
@@ -34,6 +37,10 @@ const authNavigator = createStackNavigator({
 
 const mainNavigation = createStackNavigator({
   home: WelcomeScreen
+})
+
+const noteNavigation = createStackNavigator({
+  Notes: NotesScreen
 })
 
 const referralsNav = createStackNavigator({
@@ -58,7 +65,8 @@ const mainNav = createSwitchNavigator({
 
 const drawer = createDrawerNavigator({
   Home: mainNav,
-  Referrals: referralsNav
+  Referrals: referralsNav,
+  Notes: noteNavigation
 
 },
   {

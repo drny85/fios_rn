@@ -1,4 +1,4 @@
-import { GET_NOTES } from "../actions/notes";
+import { GET_NOTES, ERROR_NOTE, ADD_NOTE } from "../actions/notes";
 
 const initialState = {
     notes: [],
@@ -12,9 +12,19 @@ const notesReducer = (state = initialState, action) => {
             return {
                 ...state,
                 notes: [...action.payload]
+            };
+
+        case ERROR_NOTE:
+            return {
+                ...state,
+                error: action.payload
+            };
+        case ADD_NOTE:
+            return {
+                ...state,
+                error: null,
+                notes: [...state.notes, action.payload]
             }
-
-
 
         default:
             return state;

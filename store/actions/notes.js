@@ -5,8 +5,10 @@ import axios from '../../api/authInstance';
 
 
 export const addNote = (note) => async dispatch => {
+
     try {
-        const response = await axios.post('/notes/new_note', note);
+
+        const response = await axios.post('/notes/new_note', { note });
         dispatch({ type: ADD_NOTE, payload: response.data })
 
     } catch (error) {
@@ -23,5 +25,15 @@ export const getNotes = () => async dispatch => {
     } catch (error) {
         console.log(error);
         dispatch({ type: ERROR_NOTE, payload: error.response.data })
+    }
+}
+
+export const getTodayNotes = () => async dispatch => {
+    try {
+        const response = await axios.get('/notes/today');
+        dispatch({ type: GET_NOTES, payload: response.data })
+    } catch (error) {
+        console.log(error);
+        dispatch({ type: ERROR_NOTE, payload: 'error getting notes' })
     }
 }

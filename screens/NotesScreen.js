@@ -11,7 +11,6 @@ import Note from '../components/Note';
 const NotesScreen = () => {
 
     const notes = useSelector(state => state.notes.notes);
-    console.log(notes);
 
     const disptach = useDispatch();
     const callback = useCallback(() => {
@@ -31,6 +30,7 @@ const NotesScreen = () => {
             return;
         }
         disptach(notesActions.addNote(note));
+        setNote('');
     }
 
     return (

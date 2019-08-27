@@ -24,10 +24,10 @@ export const getReferrals = () => async dispatch => {
 
 export const addReferral = (referral) => async dispatch => {
     try {
-        
+
         const response = await axios.post('/add-referral', referral);
-        dispatch({ type: GET_REFERRALS, payload: response.data });
-        getReferrals();
+        dispatch({ type: ADD_REFERRAL, payload: response.data });
+
     } catch (error) {
         dispatch({ type: ERROR_REFERRAL, payload: error.response });
     }

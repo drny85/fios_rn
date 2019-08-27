@@ -23,7 +23,7 @@ const notesReducer = (state = initialState, action) => {
             return {
                 ...state,
                 error: null,
-                notes: [...state.notes, action.payload]
+                notes: [action.payload, ...state.notes]
             }
 
         default:

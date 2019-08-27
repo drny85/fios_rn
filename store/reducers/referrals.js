@@ -22,9 +22,9 @@ const referralReducer = (state = initialState, action) => {
                 error: action.payload
             };
         case ADD_REFERRAL:
-            return{
+            return {
                 ...state,
-                referrals: [...state.referrals.concat(action.payload)]
+                referrals: [...state.referrals, action.payload]
             };
 
         default:

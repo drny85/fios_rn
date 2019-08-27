@@ -75,7 +75,8 @@ const styles = StyleSheet.create({
     }
 })
 
-ReferralDetails.navigationOptions = () => {
+ReferralDetails.navigationOptions = (props) => {
+    const { navigation } = props;
     return {
         headerTitle: 'Referral Details',
         headerRight: <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>

@@ -1,15 +1,17 @@
 import React from 'react';
 import moment from 'moment'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 
 const Note = ({ note, date }) => {
     return (
-        <View style={styles.note}>
-            <Text>{note}</Text>
-            <View style={styles.text}>
-                <Text style={styles.mute}>{moment(date).format('MMMM Do YYYY, hh:mm:ss a')}</Text>
+        <TouchableOpacity activeOpacity={0.4}>
+            <View style={styles.note}>
+                <Text style={{ alignItems: 'center', justifyContent: 'center' }}>{note}</Text>
+                <View style={styles.text}>
+                    <Text style={styles.mute}>{moment(date).format('MMMM Do YYYY, hh:mm:ss a')}</Text>
+                </View>
             </View>
-        </View>
+        </TouchableOpacity>
     )
 }
 
@@ -26,7 +28,6 @@ const styles = StyleSheet.create({
         shadowRadius: 5,
         borderRadius: 10,
         height: 'auto',
-
         width: '100%',
         justifyContent: 'center',
         alignItems: 'center'

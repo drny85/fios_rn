@@ -1,20 +1,36 @@
 import React from 'react'
-import { View, Text, StyleSheet, ScrollView, Platform } from 'react-native';
-import { useSelector } from 'react-redux';
+import { View, Text, StyleSheet, ScrollView, Platform, TouchableOpacity } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
+import { Ionicons } from '@expo/vector-icons'
+import { Icon } from 'react-native-elements'
 import { Item, HeaderButtons } from 'react-navigation-header-buttons';
 import CustomHeaderButton from '../components/HeaderButton';
-import moment from 'moment'
+import moment from 'moment';
+import * as actionsReferral from '../store/actions/referrals';
 
 
 const ReferralDetails = ({ navigation }) => {
     const referralId = navigation.getParam('referralId');
     const referral = useSelector(state => state.referrals.referrals.find(ref => ref._id === referralId));
 
+    const dispatch = useDispatch();
+
+    const deleteReferral = id => {
+        dispatch(actionsReferral.deleteReferral(id));
+        navigation.goBack();
+    }
+
     return (
         <View style={styles.screen}>
             <View style={styles.body}>
                 <View>
-                    <Text style={{ ...styles.spacer, ...styles.capitalize, fontWeight: '600', fontSize: 24, textAlign: 'center' }}>{referral.name} {referral.last_name}</Text>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 10 }}>
+                        <Text style={{ ...styles.spacer, ...styles.capitalize, fontWeight: '600', fontSize: 24, textAlign: 'center' }}>{referral.name} {referral.last_name}</Text>
+                        <TouchableOpacity onPress={() => deleteReferral(referralId)}>
+                            <Icon iconStyle={{ marginRight: 10 }} name="ios-trash" type="ionicon" color="red" />
+                        </TouchableOpacity>
+                    </View>
+
                     <Text style={styles.spacer}><Text style={{ ...styles.spacer, fontWeight: '600' }}>Address: </Text><Text style={styles.capitalize}>{referral.address}</Text></Text>
                     {referral.status === 'closed' ?
                         (<><Text style={{ ...styles.spacer, textTransform: 'uppercase' }}><Text style={{ ...styles.spacer, fontWeight: '600' }}>MON: </Text>{referral.mon}</Text>
@@ -40,7 +56,6 @@ const ReferralDetails = ({ navigation }) => {
                     <Text style={{ fontSize: 20, fontWeight: '600' }}>Comments or Notes</Text>
                     <Text style={{ fontSize: 16, fontStyle: 'italic' }}>{referral.comment}</Text>
                 </ScrollView>
-
             </View>
         </View>
 
@@ -77,11 +92,15 @@ const styles = StyleSheet.create({
 
 ReferralDetails.navigationOptions = (props) => {
     const { navigation } = props;
+    const refId = navigation.getParam('referralId');
+    const deleteRef = navigation.getParam('deleteRef')
     return {
         headerTitle: 'Referral Details',
-        headerRight: <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
-            <Item onPress={() => { }} title="Edit" iconName={Platform.OS === 'android' ? 'md-create' : 'ios-create'} />
-        </HeaderButtons>
+        headerRight:
+            <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+                <Item onPress={() => { }} title="Edit" iconName={Platform.OS === 'android' ? 'md-create' : 'ios-create'} />
+            </HeaderButtons>
+
     }
 }
 

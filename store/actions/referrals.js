@@ -3,7 +3,13 @@ import axios from '../../api/authInstance';
 export const GET_REFERRALS = 'GET_REFERRALS';
 export const ERROR_REFERRAL = 'ERROR';
 export const ADD_REFERRAL = 'ADD_REFERRAL';
+export const DELETE_REFERRAL = 'DELETE_REFERRAL';
+export const SET_REFFERAL = 'SET_REFERRAL';
 
+
+export const setReferral = id => async dispatch => {
+    dispatch({ type: SET_REFFERAL, payload: id })
+}
 
 
 export const getReferrals = () => async dispatch => {
@@ -30,5 +36,23 @@ export const addReferral = (referral) => async dispatch => {
 
     } catch (error) {
         dispatch({ type: ERROR_REFERRAL, payload: error.response });
+    }
+}
+
+export const deleteReferral = (id) => async dispatch => {
+    console.log(id);
+    try {
+        if (id) {
+            const response = await axios.delete(`/referral/delete/${id}`)
+
+            dispatch({ type: GET_REFERRALS });
+        } else {
+            dispatch({ type: ERROR_REFERRAL, payload: 'no referral found' });
+        }
+    }
+    catch (error) {
+        console.log(error.response)
+
+        dispatch({ type: ERROR_REFERRAL, payload: error.response.data.msg });
     }
 }

@@ -37,7 +37,7 @@ const ReferralsScreen = ({ navigation }) => {
                 <FlatList
                     data={referrals}
                     keyExtractor={item => item._id}
-                    renderItem={({ item }) => <Referral name={item.name} lastName={item.last_name}
+                    renderItem={({ item }) => <Referral id={item._id} name={item.name} lastName={item.last_name}
                         email={item.email}
                         phone={item.phone}
                         moveIn={item.moveIn}

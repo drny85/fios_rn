@@ -2,7 +2,8 @@ import React from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import Colors from '../constants/Colors';
 import { Button } from 'react-native-elements';
-import moment from 'moment'
+import moment from 'moment';
+
 
 
 const Referral = props => {

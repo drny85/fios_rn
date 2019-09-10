@@ -1,11 +1,14 @@
 import React, { useEffect, useState, useCallback } from 'react'
-import { View, Text, FlatList, Platform, StyleSheet, Dimensions, Switch } from 'react-native';
+import { View, Text, FlatList, Platform, StyleSheet, Dimensions, Switch, ActivityIndicator } from 'react-native';
 import { Item, HeaderButtons } from 'react-navigation-header-buttons';
 import CustomHeaderButton from '../components/HeaderButton';
 import Referral from '../components/Referral';
 import { useSelector, useDispatch } from 'react-redux'
 import * as refActions from '../store/actions/referrals';
+import Colors from '../constants/Colors';
+// @ts-ignore
 import { Button, Overlay, SearchBar } from 'react-native-elements';
+// @ts-ignore
 import Search from '../components/Search';
 
 const HEIGHT = Dimensions.get('window').height;
@@ -18,6 +21,7 @@ const ReferralsScreen = ({ navigation }) => {
     const [not_sold, setNotSold] = useState(false);
     const [in_progress, setInProgress] = useState(false);
     const [nuevo, setNuevo] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const alls = useSelector(state => state.referrals.referrals);
     const [referrals, setReferrals] = useState([]);
@@ -41,6 +45,7 @@ const ReferralsScreen = ({ navigation }) => {
 
     const dispatch = useDispatch();
 
+    // @ts-ignore
     const [isRefreshing, setRefreshing] = useState(false);
 
     const callback = useCallback(async () => {
@@ -51,10 +56,16 @@ const ReferralsScreen = ({ navigation }) => {
     useEffect(() => {
 
         //setRefreshing(true);
+        setLoading(true);
+        // @ts-ignore
         callback().then(res => {
+            
             setReferrals(alls);
+            setLoading(false);
+           
             //setRefreshing(false);
         });
+        
         navigation.setParams({ filterRef: () => setShowModal(prevState => prevState = !prevState) })
     }, []);
 
@@ -86,6 +97,13 @@ const ReferralsScreen = ({ navigation }) => {
         setShowModal(false);
     }
 
+    if (loading) {
+
+        return <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <ActivityIndicator size='large' />
+        </View> 
+    }
+
     return (
         <View>
             {/* <SearchBar autoCapitalize='none' onChange={searchHandler} autoCorrect={false} onChangeText={setSearch} value={search} placeholder="Search" lightTheme={true} /> */}
@@ -102,41 +120,51 @@ const ReferralsScreen = ({ navigation }) => {
                         <Text style={styles.text}>Filters</Text>
                         <View style={styles.textView}>
                             <Text style={styles.text}>New</Text>
-                            <Switch value={nuevo} trackColor="orange" onValueChange={() => {
+                            <Switch value={nuevo} 
+// @ts-ignore
+                            trackColor="orange" onValueChange={() => {
                                 resetFilter();
                                 setNuevo(true);
                             }} />
                         </View>
                         <View style={styles.textView}>
                             <Text style={styles.text}>Pending</Text>
-                            <Switch value={pending} trackColor="orange" onValueChange={() => {
+                            <Switch value={pending} 
+// @ts-ignore
+                            trackColor="orange" onValueChange={() => {
                                 resetFilter();
                                 setPending(true);
                             }} />
                         </View>
                         <View style={styles.textView}>
                             <Text style={styles.text}>Closed</Text>
-                            <Switch value={closed} trackColor="orange" onValueChange={() => {
+                            <Switch value={closed} 
+// @ts-ignore
+                            trackColor="orange" onValueChange={() => {
                                 resetFilter();
                                 setClosed(true);
                             }} />
                         </View>
                         <View style={styles.textView}>
                             <Text style={styles.text}>In Progress</Text>
-                            <Switch value={in_progress} trackColor="orange" onValueChange={() => {
+                            <Switch value={in_progress} 
+// @ts-ignore
+                            trackColor="orange" onValueChange={() => {
                                 resetFilter();
                                 setInProgress(true);
                             }} />
                         </View>
                         <View style={styles.textView}>
                             <Text style={styles.text}>Not Sold</Text>
-                            <Switch value={not_sold} trackColor="orange" onValueChange={() => {
+                            <Switch value={not_sold} 
+// @ts-ignore
+                            trackColor="orange" onValueChange={() => {
                                 resetFilter();
                                 setNotSold(true);
                             }} />
                         </View>
 
-                        <Button title="Okay" buttonStyle={{ paddingHorizontal: 20 }} onPress={modalHandler} />
+                        <Button title="Apply Filters" buttonStyle={{ paddingHorizontal: 20, backgroundColor: Colors.primary, marginTop: 10 }} onPress={modalHandler} />
                     </View>
                 </Overlay>
             </View>

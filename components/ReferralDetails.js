@@ -18,8 +18,6 @@ const ReferralDetails = ({ navigation }) => {
 
     const dispatch = useDispatch();
 
-    console.log(error);
-
     const sendEmail = () => {
         const body = {
             referral,

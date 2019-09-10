@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, StyleSheet, ScrollView, Platform, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Platform, Alert, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons'
 import { Icon } from 'react-native-elements'
@@ -11,14 +11,34 @@ import * as actionsReferral from '../store/actions/referrals';
 
 const ReferralDetails = ({ navigation }) => {
     const referralId = navigation.getParam('referralId');
-    const referral = useSelector(state => state.referrals.referrals.find(ref => ref._id === referralId));
+    const referralState = useSelector(state => state.referrals);
+    const { error, referrals } = referralState;
+    const referral = referrals.find(ref => ref._id === referralId);
 
     const dispatch = useDispatch();
 
-    const deleteReferral = id => {
-        dispatch(actionsReferral.deleteReferral(id));
-        navigation.goBack();
+    console.log(error);
+
+
+    const deleteReferral = async id => {
+        try {
+
+            const res = await dispatch(actionsReferral.deleteReferral(id));
+
+            if (res) {
+                Alert.alert('Deleted', res.data.msg, [{ text: 'OK' }]);
+                await dispatch(actionsReferral.getReferrals());
+                navigation.navigate('Referrals');
+            }
+
+        } catch (error) {
+            Alert.alert('Error', 'error', [{ text: 'OK' }])
+            console.log('LL', error);
+        }
+
     }
+
+    if (!referral) return <ActivityIndicator size='large' />;
 
     return (
         <View style={styles.screen}>
@@ -34,7 +54,7 @@ const ReferralDetails = ({ navigation }) => {
                     <Text style={styles.spacer}><Text style={{ ...styles.spacer, fontWeight: '600' }}>Address: </Text><Text style={styles.capitalize}>{referral.address}</Text></Text>
                     {referral.status === 'closed' ?
                         (<><Text style={{ ...styles.spacer, textTransform: 'uppercase' }}><Text style={{ ...styles.spacer, fontWeight: '600' }}>MON: </Text>{referral.mon}</Text>
-                            <Text style={styles.spacer}><Text style={{ ...styles.spacer, fontWeight: '600' }}>Due date: </Text>{referral.due_date}</Text>
+                            <Text style={styles.spacer}><Text style={{ ...styles.spacer, fontWeight: '600' }}>Due date: </Text>{moment(referral.due_date).format('MMMM Do YYYY')}</Text>
                             <Text style={styles.spacer}><Text style={{ ...styles.spacer, fontWeight: '600' }}>Order Date: </Text>{moment(referral.order_date).format('MMMM Do YYYY')}</Text>
                             <Text style={styles.spacer}><Text style={{ ...styles.spacer, fontWeight: '600' }}>Package: </Text>{referral.package}</Text>
                         </>)
@@ -44,13 +64,12 @@ const ReferralDetails = ({ navigation }) => {
 
                     {referral.apt ? <Text style={styles.spacer}><Text style={{ ...styles.spacer, fontWeight: '600' }}>Apt: </Text><Text style={styles.capitalize}>{referral.apt}</Text></Text> : null}
                     <Text style={styles.spacer}><Text style={{ ...styles.spacer, fontWeight: '600' }}>City: </Text>{referral.city}</Text>
-                    <Text style={styles.spacer}><Text style={{ ...styles.spacer, fontWeight: '600' }}>Zip Code: </Text>{referral.zipcode}</Text>
                     <Text style={styles.spacer}><Text style={{ ...styles.spacer, fontWeight: '600' }}>Phone: </Text>{referral.phone}</Text>
                     {referral.email ? <><Text style={styles.spacer}><Text style={{ ...styles.spacer, fontWeight: '600' }}>Email: </Text><Text>{referral.email}</Text></Text></> : null}
                     <Text style={styles.spacer}><Text style={{ ...styles.spacer, fontWeight: '600' }}>Move In: </Text>{moment(referral.moveIn).format('MMMM Do YYYY')}</Text>
                     <Text style={styles.spacer}><Text style={{ ...styles.spacer, fontWeight: '600' }}>Referral By: </Text><Text style={styles.capitalize}>{referral.referralBy.name} {referral.referralBy.last_name}</Text></Text>
                     <Text style={styles.spacer}><Text style={{ ...styles.spacer, fontWeight: '600' }}>Collateral: </Text><Text style={styles.capitalize}>{referral.collateral_sent ? 'Yes' : 'No'}</Text></Text>
-                    <Text style={styles.spacer}><Text style={{ ...styles.spacer, fontWeight: '600' }}>Status: </Text>{referral.status}</Text>
+                    <Text style={styles.spacer}><Text style={{ ...styles.spacer, fontWeight: '600' }}>Status: </Text><Text style={{ textTransform: 'capitalize' }}>{referral.status}</Text></Text>
                 </View>
                 <ScrollView style={{ padding: 10 }}>
                     <Text style={{ fontSize: 20, fontWeight: '600' }}>Comments or Notes</Text>

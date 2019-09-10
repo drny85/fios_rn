@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import Colors from '../constants/Colors';
-import { Button } from 'react-native-elements';
+import { Button, Divider } from 'react-native-elements';
 import moment from 'moment';
 
 
@@ -32,20 +32,23 @@ const Referral = props => {
         <TouchableOpacity style={{ ...styles.referral, shadowColor: setColor(status) }} activeOpacity={0.5} onPress={onSelected}>
             <View>
                 <View style={styles.nameView}>
-                    <Text style={styles.name}>{name} {lastName}</Text>
+                    <Text style={{ ...styles.name, textAlign: 'center' }}>{name} {lastName}</Text>
                 </View>
-                <View style={styles.detailView}>
-                    <Text style={styles.address}><Text style={styles.bold}>Address: </Text>{address}</Text>
-                    <Text style={styles.moving}><Text style={styles.bold}>Moving: </Text>{moment(moveIn).format('MMMM Do YYYY')}</Text>
-                </View>
-                <View style={styles.info}>
-                    <Text><Text style={styles.bold}>Phone: </Text>{phone}</Text>
-                    <Text><Text style={styles.bold}>Email: </Text>{email}</Text>
-                    <Text style={styles.bold}><Text style={{ fontWeight: '600' }}>Collateral: </Text><Text style={styles.capitalize}>{collateral ? 'Yes' : 'No'}</Text></Text>
-                    <Text><Text style={styles.bold}>Status: </Text>{status}</Text>
-                </View>
-                <View style={styles.btnView}>
-                    <Button title="View Details" buttonStyle={styles.btn} color={Colors.secondady} onPress={onSelected} />
+                <Divider style={{ height: 1.4, margin: 3 }} />
+                <View style={styles.mainBody}>
+                    <View style={styles.detailView}>
+                        <Text style={styles.address}><Text style={styles.bold}>Address: </Text>{address}</Text>
+                        <Text style={styles.moving}><Text style={styles.bold}>Moving: </Text>{moment(moveIn).format('MMMM Do YYYY')}</Text>
+                    </View>
+                    <View style={styles.info}>
+                        <Text><Text style={styles.bold}>Phone: </Text>{phone}</Text>
+                        {email ? <Text><Text style={styles.bold}>Email: </Text>{email}</Text> : null}
+                        <Text style={styles.bold}><Text style={{ fontWeight: '600' }}>Collateral: </Text><Text style={styles.capitalize}>{collateral ? 'Yes' : 'No'}</Text></Text>
+                        <Text><Text style={styles.bold}>Status: </Text><Text style={{ textTransform: 'capitalize' }}>{status}</Text></Text>
+                    </View>
+                    <View style={styles.btnView}>
+                        <Button title="View Details" buttonStyle={styles.btn} color={Colors.secondady} onPress={onSelected} />
+                    </View>
                 </View>
             </View>
         </TouchableOpacity>
@@ -53,10 +56,15 @@ const Referral = props => {
 }
 
 const styles = StyleSheet.create({
+    mainBody: {
+        margin: 10,
+        alignItems: 'baseline',
+        paddingBottom: 5
+    },
     nameView: {
         flexDirection: 'row',
-        alignContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent: 'center'
 
     },
     bold: {
@@ -101,7 +109,7 @@ const styles = StyleSheet.create({
 
     },
     referral: {
-        width: '90%',
+        width: '95%',
         maxWidth: 500,
         padding: 10,
         margin: 10,
@@ -115,8 +123,6 @@ const styles = StyleSheet.create({
         height: 300,
         maxHeight: 500,
         justifyContent: 'center',
-        alignItems: 'flex-start',
-        textAlign: 'left',
         fontSize: 20
 
     },

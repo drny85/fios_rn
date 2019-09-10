@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, StyleSheet, ScrollView, Platform, Alert, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Platform, Alert, TouchableOpacity, ActivityIndicator, Linking } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons'
 import { Icon } from 'react-native-elements'
@@ -8,6 +8,7 @@ import CustomHeaderButton from '../components/HeaderButton';
 import moment from 'moment';
 import * as actionsReferral from '../store/actions/referrals';
 import axios from '../api/authInstance';
+import newLinking from 'expo/build/Linking/Linking';
 
 
 const ReferralDetails = ({ navigation }) => {
@@ -24,13 +25,38 @@ const ReferralDetails = ({ navigation }) => {
             email: referral.email
         }
 
-        if (body.email) {
-            axios.post('/email/collateral', body);
-            dispatch(actionsReferral.getReferrals());
-        } else {
-            return;
-        }
+        Alert.alert('Send Email', `You are about to send an email to ${referral.email}`, [{text: 'Send', onPress: () => {
+            if (body.email) {
+                axios.post('/email/collateral', body);
+                dispatch(actionsReferral.getReferrals());
+            } else {
+                return;
+            }
+        }}, {text: 'Cancel', style: 'cancel'}])
+
         
+        
+    }
+
+    const makeCall = () => {
+        let phoneNumber = '';
+        if (Platform.OS === 'android') {
+            phoneNumber = `tel:${referral.phone}`
+        } else {
+            phoneNumber = `telprompt:${referral.phone}`;
+        }
+
+        Linking.canOpenURL(phoneNumber)
+        .then(supported => {
+            if (!supported) {
+                Alert.alert('Sorry, can not make this call', 'Not phone call supported', [{text: 'Ok'}])
+            } else {
+                return Linking.openURL(phoneNumber)
+            }
+        })
+        .catch(err => {
+            console.log(err);
+        })
     }
 
 
@@ -78,7 +104,13 @@ const ReferralDetails = ({ navigation }) => {
 
                     {referral.apt ? <Text style={styles.spacer}><Text style={{ ...styles.spacer, fontWeight: '600' }}>Apt: </Text><Text style={styles.capitalize}>{referral.apt}</Text></Text> : null}
                     <Text style={styles.spacer}><Text style={{ ...styles.spacer, fontWeight: '600' }}>City: </Text>{referral.city}</Text>
-                    <Text style={styles.spacer}><Text style={{ ...styles.spacer, fontWeight: '600' }}>Phone: </Text>{referral.phone}</Text>
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <Text style={styles.spacer}><Text style={{ ...styles.spacer, fontWeight: '600' }}>Phone: </Text></Text>
+                    <TouchableOpacity onPress={makeCall}>
+                        <Text style={styles.spacer}>{referral.phone}</Text>
+                    </TouchableOpacity>
+                    </View>
+                    
                     {referral.email ? <><Text style={styles.spacer}><Text style={{ ...styles.spacer, fontWeight: '600' }}>Email: </Text><Text>{referral.email}</Text></Text></> : null}
                     <Text style={styles.spacer}><Text style={{ ...styles.spacer, fontWeight: '600' }}>Move In: </Text>{new Date(referral.moveIn).toDateString()}</Text>
                     <Text style={styles.spacer}><Text style={{ ...styles.spacer, fontWeight: '600' }}>Referral By: </Text><Text style={styles.capitalize}>{referral.referralBy.name} {referral.referralBy.last_name}</Text></Text>

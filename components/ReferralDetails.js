@@ -7,6 +7,7 @@ import { Item, HeaderButtons } from 'react-navigation-header-buttons';
 import CustomHeaderButton from '../components/HeaderButton';
 import moment from 'moment';
 import * as actionsReferral from '../store/actions/referrals';
+import axios from '../api/authInstance';
 
 
 const ReferralDetails = ({ navigation }) => {
@@ -19,6 +20,21 @@ const ReferralDetails = ({ navigation }) => {
 
     console.log(error);
 
+    const sendEmail = () => {
+        const body = {
+            referral,
+            email: referral.email
+        }
+
+        if (body.email) {
+            axios.post('/email/collateral', body);
+            dispatch(actionsReferral.getReferrals());
+        } else {
+            return;
+        }
+        
+    }
+
 
     const deleteReferral = async id => {
         try {
@@ -26,7 +42,7 @@ const ReferralDetails = ({ navigation }) => {
             const res = await dispatch(actionsReferral.deleteReferral(id));
 
             if (res) {
-                Alert.alert('Deleted', res.data.msg, [{ text: 'OK' }]);
+                Alert.alert('Deleted', 'Referral has been deleted', [{ text: 'OK' }]);
                 await dispatch(actionsReferral.getReferrals());
                 navigation.navigate('Referrals');
             }
@@ -66,9 +82,17 @@ const ReferralDetails = ({ navigation }) => {
                     <Text style={styles.spacer}><Text style={{ ...styles.spacer, fontWeight: '600' }}>City: </Text>{referral.city}</Text>
                     <Text style={styles.spacer}><Text style={{ ...styles.spacer, fontWeight: '600' }}>Phone: </Text>{referral.phone}</Text>
                     {referral.email ? <><Text style={styles.spacer}><Text style={{ ...styles.spacer, fontWeight: '600' }}>Email: </Text><Text>{referral.email}</Text></Text></> : null}
-                    <Text style={styles.spacer}><Text style={{ ...styles.spacer, fontWeight: '600' }}>Move In: </Text>{moment(referral.moveIn).format('MMMM Do YYYY')}</Text>
+                    <Text style={styles.spacer}><Text style={{ ...styles.spacer, fontWeight: '600' }}>Move In: </Text>{new Date(referral.moveIn).toDateString()}</Text>
                     <Text style={styles.spacer}><Text style={{ ...styles.spacer, fontWeight: '600' }}>Referral By: </Text><Text style={styles.capitalize}>{referral.referralBy.name} {referral.referralBy.last_name}</Text></Text>
+                    <View style={{justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center'}}>
                     <Text style={styles.spacer}><Text style={{ ...styles.spacer, fontWeight: '600' }}>Collateral: </Text><Text style={styles.capitalize}>{referral.collateral_sent ? 'Yes' : 'No'}</Text></Text>
+                    {!referral.collateral_sent ? 
+                    <TouchableOpacity style={{marginRight: 10, borderWidth: 1 , padding: 5, borderRadius: 10, paddingHorizontal: 10, backgroundColor: '#c6c9cf', borderColor: '#c6c9cf'}} onPress={sendEmail}>
+                            <Text>Send Collateral</Text>
+                        </TouchableOpacity> : null
+                    }
+                    </View>
+                    
                     <Text style={styles.spacer}><Text style={{ ...styles.spacer, fontWeight: '600' }}>Status: </Text><Text style={{ textTransform: 'capitalize' }}>{referral.status}</Text></Text>
                 </View>
                 <ScrollView style={{ padding: 10 }}>

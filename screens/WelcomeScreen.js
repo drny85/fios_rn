@@ -26,7 +26,9 @@ const WelcomeScreen = ({ navigation }) => {
 
     return (
         <View style={styles.screen}>
-            <ImageBackground resizeMethod='resize' style={styles.img} source={require('../assets/screen.jpg')}>
+            <ImageBackground resizeMethod='resize' style={styles.img} source={require(
+// @ts-ignore
+            '../assets/screen.jpg')}>
                 <View style={styles.textView}>
                     <Text style={styles.text}>Welcome</Text>
                     <Button title="Get Started" buttonStyle={{ backgroundColor: "transparent", borderColor: 'white', borderWidth: 0.5, borderRadius: 10, paddingHorizontal: 20 }} onPress={() => navigation.navigate('Referrals')} />

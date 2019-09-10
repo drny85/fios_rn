@@ -38,7 +38,7 @@ const Referral = props => {
                 <View style={styles.mainBody}>
                     <View style={styles.detailView}>
                         <Text style={styles.address}><Text style={styles.bold}>Address: </Text>{address}</Text>
-                        <Text style={styles.moving}><Text style={styles.bold}>Moving: </Text>{moment(moveIn).format('MMMM Do YYYY')}</Text>
+                        <Text style={styles.moving}><Text style={styles.bold}>Moving: </Text>{new Date(moveIn).toDateString()}</Text>
                     </View>
                     <View style={styles.info}>
                         <Text><Text style={styles.bold}>Phone: </Text>{phone}</Text>
@@ -47,7 +47,7 @@ const Referral = props => {
                         <Text><Text style={styles.bold}>Status: </Text><Text style={{ textTransform: 'capitalize' }}>{status}</Text></Text>
                     </View>
                     <View style={styles.btnView}>
-                        <Button title="View Details" buttonStyle={styles.btn} color={Colors.secondady} onPress={onSelected} />
+                        <Button title="View Details" buttonStyle={styles.btn}  onPress={onSelected} />
                     </View>
                 </View>
             </View>

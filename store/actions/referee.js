@@ -6,9 +6,11 @@ import axios from '../../api/authInstance';
 export const getReferees = () => async dispatch => {
     try {
         const response = await axios.get('/referee/all-referees');
+        
         dispatch({ type: GET_REFEREES, payload: response.data })
     } catch (error) {
-        dispatch({ type: ERROR_REFEREE, payload: error.response.data });
+        console.log('REFEREE ERROR', error);
+        dispatch({ type: ERROR_REFEREE, payload: error });
     }
 }
 

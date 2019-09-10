@@ -1,12 +1,12 @@
-import { GET_REFERRALS, ERROR_REFERRAL, ADD_REFERRAL, DELETE_REFERRAL, FILTER } from "../actions/referrals";
-import { SET_REFFERAL } from "../actions/auth";
+import { GET_REFERRALS, ERROR_REFERRAL, ADD_REFERRAL, DELETE_REFERRAL, SET_REFFERAL } from "../actions/referrals";
+
 
 const initialState = {
     referrals: [],
     referral: null,
     sortedReferrals: [],
-    error: null,
-    sortedReferrals: []
+    error: null
+ 
 }
 
 const referralReducer = (state = initialState, action) => {
@@ -40,21 +40,7 @@ const referralReducer = (state = initialState, action) => {
                 ...state,
                 referral: { ...state.referrals.find(ref => ref._id === action.payload) }
             };
-        case FILTER:
-            console.log('HERE');
-            console.log(state.referrals);
-            return {
-                ...state,
-                referrals: {
-                    ...state.referrals.filter(ref => {
-                        if (action.payload) {
-                            return ref.status === action.payload
-                        }
-                        return state.referrals;
-                    })
-                }
-            }
-
+       
         default:
             return state;
     }

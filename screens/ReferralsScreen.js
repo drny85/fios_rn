@@ -50,10 +50,10 @@ const ReferralsScreen = ({ navigation }) => {
 
     useEffect(() => {
 
-        setRefreshing(true);
+        //setRefreshing(true);
         callback().then(res => {
             setReferrals(alls);
-            setRefreshing(false);
+            //setRefreshing(false);
         });
         navigation.setParams({ filterRef: () => setShowModal(prevState => prevState = !prevState) })
     }, []);
@@ -141,9 +141,6 @@ const ReferralsScreen = ({ navigation }) => {
                 </Overlay>
             </View>
             <View>
-                <Button buttonStyle={{ paddingHorizontal: 20, alignSelf: 'center', marginTop: 20, marginBottom: 10 }} title="Add Referral" onPress={() => navigation.navigate('Add')} />
-            </View>
-            <View>
                 <FlatList
                     onRefresh={callback}
                     refreshing={isRefreshing}
@@ -174,9 +171,16 @@ ReferralsScreen.navigationOptions = ({ navigation }) => {
         headerLeft: <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
             <Item onPress={() => navigation.toggleDrawer()} title="Menu" iconName={Platform.OS === 'android' ? 'md-menu' : 'ios-menu'} />
         </HeaderButtons>,
-        headerRight: <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
-            <Item onPress={filter} title="Filter" iconName={Platform.OS === 'android' ? 'md-funnel' : 'ios-funnel'} />
-        </HeaderButtons>
+        headerRight: (
+            <>
+                <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+                    <Item onPress={filter} title="Filter" iconName={Platform.OS === 'android' ? 'md-funnel' : 'ios-funnel'} />
+                </HeaderButtons>
+                <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+                    <Item onPress={() => navigation.navigate('Add')} title="Add" iconName={Platform.OS === 'android' ? 'md-add' : 'ios-add'} />
+                </HeaderButtons>
+            </>
+        )
 
     }
 }

@@ -29,7 +29,7 @@ const Referral = props => {
         }
     }
     return (
-        <TouchableOpacity style={{ ...styles.referral, shadowColor: setColor(status) }} activeOpacity={0.5} onPress={onSelected}>
+        <TouchableOpacity style={{ ...styles.referral }} activeOpacity={0.2} onPress={onSelected}>
             <View>
                 <View style={styles.nameView}>
                     <Text style={{ ...styles.name, textAlign: 'center' }}>{name} {lastName}</Text>
